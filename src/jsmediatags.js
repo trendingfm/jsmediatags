@@ -3,8 +3,15 @@
  */
 'use strict';
 
+// React Native does not support the Node.js 'fs' module, so we must
+// comment it out in this fork to get it to work there.
+//
+// NOTE: Should find a way to reliably detect React Native. Did not work
+// to wrap the 'fs' require inside a try/catch block. Was still a fatal error.
+// Until then, this fork will only work on React Native.
+
 const MediaFileReader = require("./MediaFileReader");
-const NodeFileReader = require("./NodeFileReader");
+// const NodeFileReader = require("./NodeFileReader");
 const XhrFileReader = require("./XhrFileReader");
 const BlobFileReader = require("./BlobFileReader");
 const ArrayFileReader = require("./ArrayFileReader");
@@ -270,10 +277,12 @@ Config
   .addTagReader(ID3v1TagReader)
   .addTagReader(MP4TagReader);
 
-if (typeof process !== "undefined") {
-  Config
-    .addFileReader(NodeFileReader);
-}
+// Comment out all references to 'fs' module for React Native.
+
+// if (typeof process !== "undefined") {
+//   Config
+//     .addFileReader(NodeFileReader);
+// }
 
 module.exports = {
   "read": read,
